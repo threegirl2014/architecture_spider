@@ -1,0 +1,23 @@
+[[source]]
+
+url = "https://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+
+
+[packages]
+
+scrapy = "*"
+scrapy-redis = "*"
+scrapyd = "*"
+scrapyd-client = "*"
+ipython = "==5.1.0"
+
+
+[requires]
+
+python_version = "2.7"
