@@ -15,6 +15,7 @@ scrapy = "*"
 scrapy-redis = "*"
 scrapyd = "*"
 scrapyd-client = "*"
+pymongo = "*"
 ipython = "==5.1.0"
 
 

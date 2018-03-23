@@ -18,6 +18,9 @@ class IdchinaSpider(scrapy.Spider):
     base_url = 'http://mixinfo.id-china.com.cn'
     allowed_domains = ['id-china.com.cn']
     start_urls = ['http://mixinfo.id-china.com.cn/col-2-1.html', ]
+    custom_settings = {
+        #'DOWNLOAD_DELAY': 0.1
+    }
 
     def parse(self, response):
         docs = response.xpath('//div[@id="left"]/div[@id="infolist"]/ul/li')
@@ -25,12 +28,15 @@ class IdchinaSpider(scrapy.Spider):
             item = ArchitectureItem()
             url = doc.xpath('a/@href').extract_first()
             category = doc.xpath('em/a/text()').extract_first()
+            if url is None:
+                continue
             item['url'] = self.base_url + url
             item['site'] = self.base_url
             item['category'] = category
             item['document_id'] = md5(url)
             req = scrapy.Request(self.base_url + url, callback=self.parse_doc, meta={'item': item, 'page': 1})
             yield req
+        logger.warn('---- page url ----: {}'.format(response.url))
         next_page = response.xpath('//div[@id="left"]/div[@class="pages"]/a')[-1]
         text = next_page.xpath('text()').extract_first()
         if u'下一页' in text:

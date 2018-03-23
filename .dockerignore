@@ -1,0 +1,15 @@
+logs/
+eggs/
+build/
+dbs/
+architecture_spider/build/
+architecture_spider/project.egg-info/
+*~
+*.pyc
+*.pyo
+*.db
+*.log
+*.swp
+.idea/
+*.tmp
+*.egg-info/

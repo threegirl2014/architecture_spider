@@ -31,7 +31,9 @@ class ArchitectureSpiderPipeline(object):
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
-        self.db[self.collection_name].create_index([('document_id', pymongo.ASCENDING)], unique=True)
+        self.db[self.collection_name].create_index([('document_id', pymongo.ASCENDING),
+                                                    ('date', pymongo.ASCENDING)],
+                                                   unique=True)
 
     def close_spider(self, spider):
         self.client.close()
@@ -39,7 +41,7 @@ class ArchitectureSpiderPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, ArchitectureItem):
             try:
-                self.db[self.collection_name].insert(dict(item))
+                self.db[self.collection_name].insert_one(dict(item))
             except WriteError, e:  # DuplicateKeyError
-                logger.warn('{}: {}'.format(e, item['url']))
+                logger.warn('---- duplicate ----: {}'.format(item['url']))
         return item
