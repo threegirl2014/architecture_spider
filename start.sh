@@ -1,7 +1,7 @@
 #! /bin/bash
 
 docker pull registry.docker-cn.com/library/mongo:3.4.7
-docker run -d --name=mongo registry.docker-cn.com/library/mongo:3.4.7
+docker run -d --name=mongo -p 27017:27017 registry.docker-cn.com/library/mongo:3.4.7
 
 docker pull registry.docker-cn.com/vimagick/scrapyd
 docker build -t architecture_spider .
