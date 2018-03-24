@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+    mongo:
+        image: registry.docker-cn.com/library/mongo:3.4.7
+        ports:
+            - "127.0.0.1:27017:27017"
+        restart: always
+
+    architecture:
+        build: .
+        links:
+            - mongo
+        ports:
+            - "127.0.0.1:6800:6800"
+        working_dir: /architecture_spider
+        #volumes:
+        #    - .:/architecture_spider
